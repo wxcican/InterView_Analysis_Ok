@@ -26,7 +26,7 @@ public class SaxBookParser {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         //从factory获取SAXParser实例
         SAXParser parser = factory.newSAXParser();
-        //实例化自定义的Handler
+        //实例化自定义的Handler(我们定义了自己的事件处理逻辑)
         MyHandler myHandler = new MyHandler();
         //根据自定义Handler规则解析输入流
         parser.parse(inputStream,myHandler);
@@ -53,6 +53,7 @@ public class SaxBookParser {
             builder = new StringBuilder();
         }
 
+        //当执行文档时遇到起始节点，startElement方法将会被调用，我们可以获取起始节点相关信息
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             super.startElement(uri, localName, qName, attributes);
@@ -63,6 +64,7 @@ public class SaxBookParser {
             builder.setLength(0);
         }
 
+        //然后characters方法被调用，我们可以获取节点内的文本信息
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
             super.characters(ch, start, length);
@@ -70,6 +72,7 @@ public class SaxBookParser {
             builder.append(ch,start,length);
         }
 
+        //最后endElement方法被调用，我们可以做收尾的相关操作
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             super.endElement(uri, localName, qName);

@@ -21,15 +21,23 @@ import javax.xml.parsers.ParserConfigurationException;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class XmlActivity extends AppCompatActivity {
+
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xml);
-        ButterKnife.bind(this);
-        SAXparser();
+        unbinder = ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 
     @OnClick({R.id.xml_sax_btn,R.id.xml_dom_btn,R.id.xml_pull_btn})
@@ -39,8 +47,10 @@ public class XmlActivity extends AppCompatActivity {
                 SAXparser();
                 break;
             case R.id.xml_dom_btn:
+                DOMparser();
                 break;
             case R.id.xml_pull_btn:
+                PULLparser();
                 break;
 
         }
@@ -54,6 +64,34 @@ public class XmlActivity extends AppCompatActivity {
             List<Book> books = saxBookParser.parse(inputStream);
             for (Book book : books){
                 Log.e("SaxParser",book.toString());
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    //DOM解析xml
+    private void DOMparser(){
+        try {
+            InputStream inputStream = getAssets().open("Books.xml");
+            DomBookParser domBookParser = new DomBookParser();
+            List<Book> books = domBookParser.parse(inputStream);
+            for (Book book : books){
+                Log.e("DOMparser",book.toString());
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    //PULL解析xml
+    private void PULLparser(){
+        try {
+            InputStream inputStream = getAssets().open("Books.xml");
+            PullBookParser pullBookParser = new PullBookParser();
+            List<Book> books = pullBookParser.parse(inputStream);
+            for (Book book : books){
+                Log.e("PULLparser",book.toString());
             }
         } catch (Exception e) {
 
