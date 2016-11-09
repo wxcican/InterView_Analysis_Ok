@@ -1,11 +1,8 @@
 package com.fuicuiedu.idedemo.interview_analysis.xml;
 
 import android.util.Xml;
-
 import com.fuicuiedu.idedemo.interview_analysis.entity.Book;
-
 import org.xmlpull.v1.XmlPullParser;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,7 @@ public class PullBookParser {
         while (eventType != XmlPullParser.END_DOCUMENT) {
             switch (eventType) {
                 case XmlPullParser.START_DOCUMENT:
-                    books = new ArrayList<Book>();
+                    books = new ArrayList<>();
                     break;
                 case XmlPullParser.START_TAG:
                     if (parser.getName().equals("book")) {
@@ -54,7 +51,7 @@ public class PullBookParser {
                     }
                     break;
             }
-            //判断是否还有下一个事件，有则循环
+            //获取下一个事件类型，判断循环
             eventType = parser.next();
         }
         return books;

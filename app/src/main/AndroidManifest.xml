@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".xml.XmlActivity"></activity>
+        <activity android:name=".xml.XmlActivity" />
+        <activity android:name=".json.JsonActivity"></activity>
     </application>
 
 </manifest>
